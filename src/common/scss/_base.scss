@@ -1,0 +1,12 @@
+@import './var';
+@import './reset';
+
+@import './utils/mixins';
+@import './utils/placeholders';
+@import './utils/visually-hidden';
+@import './common';
+
+@import '../../components/btns/index';
+
+@import '../../components/modal/backdrop';
+@import '../../components/modal/modal';

@@ -1,0 +1,23 @@
+:root {
+  // === fonts ===
+
+  // === colors ===
+
+  // === card set item ===
+  --items: 1;
+}
+
+// === screen sizes ===
+$small: 480px;
+$medium: 768px;
+$large: 1200px;
+
+$extraSmallMax: $small - 1;
+$smallMax: $medium - 1;
+$mediumMax: $large - 1;
+// === screen sizes ===
+
+// === sizes ===
+$padding-small: 16px;
+$padding-medium: calc($padding-small * 2);
+$border-radius: 12px;

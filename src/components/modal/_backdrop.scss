@@ -1,0 +1,26 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  @extend %flex-center-ja;
+
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 3000;
+
+  &.isHidden {
+    display: none;
+  }
+}
+
+.backdrop.mod {
+  z-index: 2000;
+
+  @media (orientation: landscape) {
+    // padding-top: $height-header;
+    align-items: flex-start;
+    overflow: scroll;
+  }
+}

@@ -1,0 +1,47 @@
+%cardSet {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+%cardSet__item {
+  flex-basis: calc((100% - var(--gap) * (var(--items) - 1)) / var(--items));
+  @include breakpoint-min($medium) {
+    --items: 2;
+  }
+  @include breakpoint-min($large) {
+    --items: 3;
+  }
+}
+
+%flex-center-a {
+  display: flex;
+  align-items: center;
+}
+
+%flex-center-ja {
+  @extend %flex-center-a;
+  justify-content: center;
+}
+
+%flex-dir-column {
+  display: flex;
+  flex-direction: column;
+}
+
+%cursor {
+  cursor: pointer;
+}
+
+%border-radius {
+  border-radius: $border-radius;
+}
+
+%absolute {
+  position: absolute;
+}
+
+%currentColor {
+  fill: currentColor;
+}

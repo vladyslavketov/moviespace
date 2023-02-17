@@ -1,0 +1,40 @@
+.modal.container {
+  position: relative;
+}
+
+.modal__close-btn {
+  @extend %absolute;
+  top: 4px;
+  right: $padding-small;
+  @extend %flex-center-a;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+
+  background-color: transparent;
+  @extend %cursor;
+
+  @include breakpoint-min-max($medium, ($medium + $padding-medium)) {
+    right: $padding-medium;
+  }
+}
+
+.modal__close-btn .burger-line {
+  width: 100%;
+  height: 3px;
+  margin: 0;
+
+  background-color: white;
+  @extend %border-radius;
+
+  &:first-child {
+    @extend %absolute;
+    transform: rotate(-45deg);
+    transform: translateY(8px);
+  }
+
+  &:last-child {
+    transform: rotate(45deg);
+    transform: translateY(-8px);
+  }
+}
