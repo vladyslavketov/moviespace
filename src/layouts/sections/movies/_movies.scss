@@ -1,0 +1,25 @@
+.movies__list {
+  @extend %cardSet;
+}
+
+.movie-card {
+  --items: 2;
+  position: relative;
+  @extend %cardSet__item;
+  @extend %flex-dir-column;
+  @extend %border-radius;
+  overflow: hidden;
+
+  @include breakpoint-min($medium) {
+    --items: 4;
+  }
+  @include breakpoint-min($large) {
+    --items: 5;
+  }
+}
+
+.movie-card__img {
+  width: 100%;
+  object-fit: cover;
+  @extend %cursor;
+}

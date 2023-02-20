@@ -1,0 +1,38 @@
+.mobile-menu {
+  position: fixed;
+  top: $height-header;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  @extend %flex-dir-column;
+  padding: 28px 16px;
+
+  color: white;
+
+  background-color: rgba($color: black, $alpha: 0.9);
+  overflow-y: scroll;
+  z-index: 1001;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: transform var(--transition__main),
+    visibility var(--transition__main);
+
+  body.isScrolling & {
+    top: 44px;
+  }
+
+  &.isOpen {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: all;
+  }
+
+  @include breakpoint-min($medium) {
+    left: 50%;
+  }
+  @include breakpoint-min($large) {
+    display: none;
+  }
+}

@@ -6,7 +6,10 @@
 @import './utils/visually-hidden';
 @import './common';
 
+@import '../../components/loader/loader';
 @import '../../components/btns/index';
-
 @import '../../components/modal/backdrop';
 @import '../../components/modal/modal';
+@import '../../components/mobile-menu/mobile-menu';
+
+@import '../../layouts/sections/movies/movies';

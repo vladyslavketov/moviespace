@@ -1,20 +1,20 @@
 {
-  "name": "template-parcel",
+  "name": "filmstore",
   "version": "1.0.0",
   "source": "src/pages/index.html",
   "scripts": {
-    "start": "parcel src/pages/*.html",
-    "build": "parcel build"
+    "start": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /filmstore/"
   },
-  "homepage": "https://github.com/vladyslavketov/template-parcel",
+  "homepage": "https://github.com/vladyslavketov/filmstore",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vladyslavketov/template-parcel.git"
+    "url": "git+https://github.com/vladyslavketov/filmstore.git"
   },
   "author": "Vladyslav Ketov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vladyslavketov/template-parcel/issues"
+    "url": "https://github.com/vladyslavketov/filmstore/issues"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
@@ -22,5 +22,8 @@
     "parcel-reporter-clean-dist": "^1.0.4",
     "parcel-reporter-static-files-copy": "^1.5.0",
     "posthtml-include": "^1.7.4"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1"
   }
 }

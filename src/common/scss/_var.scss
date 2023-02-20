@@ -2,9 +2,11 @@
   // === fonts ===
 
   // === colors ===
+  --bgc__main: rgb(255, 221, 154);
 
   // === card set item ===
   --items: 1;
+  --gap: 20px;
 }
 
 // === screen sizes ===
@@ -18,6 +20,7 @@ $mediumMax: $large - 1;
 // === screen sizes ===
 
 // === sizes ===
+$height-header: 60px;
 $padding-small: 16px;
 $padding-medium: calc($padding-small * 2);
-$border-radius: 12px;
+$border-radius: 8px;
