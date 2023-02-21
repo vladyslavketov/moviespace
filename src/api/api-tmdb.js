@@ -12,19 +12,27 @@ export async function getMovies(typeOfQuery, movieId, searchQuery) {
       break;
 
     case 'details':
-      options = `/movie/${movieId}`;
+      options = `movie/${movieId}`;
+      break;
+
+    case 'video':
+      options = `movie/${movieId}/videos`;
       break;
 
     case 'cast':
-      options = `/movie/${movieId}/credits`;
+      options = `movie/${movieId}/credits`;
       break;
 
     case 'reviews':
-      options = `/movie/${movieId}/reviews`;
+      options = `movie/${movieId}/reviews`;
       break;
 
     case 'trend':
-      options = `trending/all/day`;
+      options = `trending/all/week`;
+      break;
+    
+    case 'genres':
+     options = `genre/movie/list`;
       break;
 
     default:
@@ -35,6 +43,8 @@ export async function getMovies(typeOfQuery, movieId, searchQuery) {
     res => res.json()
   );
 }
+
+// const options = `movie/${id}/videos?api_key=${KEY}`;
 
 // ===== Деталі ================================================================================
 // /trending/get-trending список найпопулярніших фільмів на сьогодні для створення колекції на головній сторінці.
