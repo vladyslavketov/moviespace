@@ -30,21 +30,24 @@ export async function getMovies(typeOfQuery, movieId, searchQuery) {
     case 'trend':
       options = `trending/all/week`;
       break;
-    
+
     case 'genres':
-     options = `genre/movie/list`;
+      options = `genre/movie/list`;
       break;
 
     default:
       console.log('Invalid typeOfQuery');
   }
 
-  return fetch(`${BASE_URL}${options}?api_key=${API_KEY}${queryOptions}`).then(
-    res => res.json()
-  );
-}
+  const res = await fetch(`${BASE_URL}${options}?api_key=${API_KEY}${queryOptions}`);
+  const resJson = await res.json();
+  return resJson;
 
-// const options = `movie/${id}/videos?api_key=${KEY}`;
+  // ===== old return ==================================================
+  // return fetch(`${BASE_URL}${options}?api_key=${API_KEY}${queryOptions}`).then(
+  //   res => res.json()
+  // );
+}
 
 // ===== Деталі ================================================================================
 // /trending/get-trending список найпопулярніших фільмів на сьогодні для створення колекції на головній сторінці.
@@ -53,35 +56,3 @@ export async function getMovies(typeOfQuery, movieId, searchQuery) {
 // /movies/get-movie-credits запит інформації про акторський склад для сторінки кінофільму.
 // /movies/get-movie-reviews запит оглядів для сторінки кінофільму.
 // ================================================================================
-
-
-// ===== Альтернатива ================================================================================
-// export function getTrendingMovies() {
-//   return fetch(`${BASE_URL}trending/all/day?api_key=${API_KEY}`).then(res =>
-//     res.json()
-//   );
-// }
-
-// export function getSearchMovies(searchQuery) {
-//   return fetch(
-//     `${BASE_URL}search/movie?api_key=${API_KEY}&query=${searchQuery}`
-//   ).then(res => res.json());
-// }
-
-// export function getMovieDetails(movieId) {
-//   return fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`).then(res =>
-//     res.json()
-//   );
-// }
-
-// export function getMovieDetailsCast(movieId) {
-//   return fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`).then(
-//     res => res.json()
-//   );
-// }
-
-// export function getMovieDetailsReviews(movieId) {
-//   return fetch(`${BASE_URL}/movie/${movieId}/reviews?api_key=${API_KEY}`).then(
-//     res => res.json()
-//   );
-// }

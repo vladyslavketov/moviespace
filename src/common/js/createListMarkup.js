@@ -1,6 +1,5 @@
-// TODO 1 - add inforation in answer
-export default function createListMarkup(arrayOfData, createItemMarkup) {
-  if (!Array.isArray(arrayOfData) || !arrayOfData.length > 0)
-    return 'Нажаль данні не завантажились( Спробуйте пізніше'; // TODO 1
-  return arrayOfData.map(data => createItemMarkup(data)).join('');
+export default function createListMarkup(dataArray, createItemMarkup) {
+  if (!Array.isArray(dataArray) || !dataArray.length > 0)
+    return 'Нажаль данні не завантажились( Спробуйте пізніше'; // TODO - add notification
+  return dataArray.map(data => createItemMarkup(data)).join('');
 }

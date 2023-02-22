@@ -4,28 +4,25 @@ import createListMarkup from '../../../common/js/createListMarkup';
 import createMovieCardMarkup from '../../../templates/createMovieCardMarkup';
 import createMovieDetailsMarkup from '../../../templates/createMovieDetailsMarkup';
 import { createPaginationBtnListMarkup } from '../../../components/pagination/pagination';
-
 import { showLoader, hideLoader } from '../../../components/loader/loader';
 import { openModal } from '../../../components/modal/modal';
 
+import '../../../components/search-form/search-form';
 
-onfirstLoad();
+let allGenresList = null;
+onFirstLoad();
 
-// ===== Вішаємо прослуховувачі кліків на кнопки "пагінації", "деталі проекту", "фільту" ================================================================================
+// ===== addEventListeners ==================================================
 refs.moviesList.addEventListener('click', onMovieDetailsBtnClick);
 
-async function onfirstLoad() {
-  const res = await getMovies('trend');
-  const trendingMovies = res.results;
-  const listMarkup = createListMarkup(trendingMovies, createMovieCardMarkup);
-  refs.moviesList.innerHTML = listMarkup;
-  renderPagination(res.total_pages);
-  getGenres();
-}
+// ===== On function ==================================================
+async function onFirstLoad() {
+  allGenresList = await getAllGenres();
 
-async function renderPagination(pages) {
-  if (!pages || pages < 2) return (refs.pagination.innerHTML = ''); // TODO -  передивитись блок іф
-  refs.pagination.innerHTML = createPaginationBtnListMarkup(pages);
+  const trendRes = await getMovies('trend');
+  const trendingMovies = trendRes.results;
+
+  renderMovies(trendingMovies);
 }
 
 async function onMovieDetailsBtnClick(e) {
@@ -55,19 +52,68 @@ function onMovieDetailsPlayBtnClick(e) {
     : (e.target.textContent = 'Show official trailer');
 }
 
+// ===== GET function ==================================================
+async function getAllGenres() {
+  const genresRes = await getMovies('genres');
+  return genresRes.genres;
+}
+
+function getDataToRender(dataArray) {
+  const moviesDataToRender = dataArray.map(data => {
+    const {
+      id,
+      name,
+      title,
+      genre_ids,
+      poster_path,
+      release_date,
+      first_air_date,
+    } = data;
+    const movieTitle = title || name;
+    const genresNamesList = getGenresNames(genre_ids);
+    const movieImg = `https://image.tmdb.org/t/p/w500${poster_path}`;
+    const releaseDate = release_date ? release_date : first_air_date;
+    const releaseYear = releaseDate ? releaseDate.slice(0, 4) : '';
+
+    return { id, movieTitle, movieImg, releaseYear, genresNamesList };
+  });
+
+  return moviesDataToRender;
+}
+
+function getGenresNames(genresIds) {
+  const genresNames = genresIds
+    .map(genreId => allGenresList.find(genre => genreId === genre.id)?.name)
+    .filter(genreName => genreName !== undefined)
+    .join(', ');
+
+  return genresNames;
+}
+
 async function getMovieDetailsVideoKey(data) {
   const { results } = await data;
   if (!results || results.length < 1) return null;
 
-  const officialTrailer = results.find(res => (res.name.toLowerCase() === 'official trailer'));
-  const anyTrailer = results.find(res => res.name.toLowerCase().includes('trailer'));
+  const officialTrailer = results.find(
+    res => res.name.toLowerCase() === 'official trailer'
+  );
+  const anyTrailer = results.find(res =>
+    res.name.toLowerCase().includes('trailer')
+  );
 
   return officialTrailer?.key && anyTrailer?.key;
 }
 
-async function getGenres(params) {
-  const genresRes = await getMovies('genres');
-  console.log(genresRes.genres);
+// ===== other function ==================================================
+export function renderMovies(moviesData) {
+  const dataToRender = getDataToRender(moviesData);
+  const listMarkup = createListMarkup(dataToRender, createMovieCardMarkup);
+  refs.moviesList.innerHTML = listMarkup;
+}
+
+async function renderPagination(pages) {
+  if (!pages || pages < 2) return (refs.pagination.innerHTML = ''); // TODO -  передивитись блок іф
+  refs.pagination.innerHTML = createPaginationBtnListMarkup(pages);
 }
 
 // =========

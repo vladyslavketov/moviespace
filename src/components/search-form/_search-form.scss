@@ -1,0 +1,23 @@
+.search-form {
+  @extend %flex-center-ja;
+  gap: 16px;
+  margin: 20px auto;
+  padding: 16px;
+
+  background-color: black;
+  @extend %border-radius;
+}
+.search-form__button {
+  padding: 8px;
+
+  background-color: wheat;
+  @extend %border-radius;
+}
+// .button-label {
+// }
+.search-form__input {
+  padding: 8px;
+
+  background-color: wheat;
+  @extend %border-radius;
+}

@@ -8,6 +8,7 @@ const refs = {
   pagination: document.querySelector('div.pagination'),
   btnUp: document.querySelector('.btn-up'),
 
+  searchForm: document.querySelector('form.search-form'),
   moviesList: document.querySelector('.movies__list'),
 };
 export default refs;
