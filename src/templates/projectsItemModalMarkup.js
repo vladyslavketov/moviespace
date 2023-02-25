@@ -42,5 +42,3 @@ export default function projectsItemModalMarkup(data) {
     </div>
   `;
 }
-
-{/* <p class="project__category">${categoryName}</p> */}

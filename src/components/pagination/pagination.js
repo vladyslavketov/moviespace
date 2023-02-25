@@ -28,3 +28,10 @@ export function createPaginationBtnListMarkup(pages) {
 
   return arrayOfBtn.map(item => paginationBtnMarkup(item)).join('');
 }
+
+export function hideBtn(e) {
+  const currentPage = getCurrentPage(e);
+  console.log(currentPage);
+  
+
+}

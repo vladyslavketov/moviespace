@@ -1,11 +1,5 @@
-export default function createMovieDetailsMarkup(detailsRes, videoKey) {
-  const { id, title, name, poster_path, release_date, firstDate, genres, } = detailsRes;
-  const movieTitle = title || name;
-  const movieImg = `https://image.tmdb.org/t/p/w500${poster_path}`;
-  const movieGenres = genres?.map(genr => genr.name).join(", ");
-  const releaseDate = release_date ? release_date : firstDate;
-  const year = releaseDate ? releaseDate.slice(0, 4) : '';
-  
+export default function createMovieDetailsMarkup(dataToRender, videoKey) {
+  const { id, movieTitle, movieImg, releaseYear, genresNamesList } = dataToRender;
   const movieIframe = !videoKey
     ? ''
     : ` <iframe
@@ -16,8 +10,8 @@ export default function createMovieDetailsMarkup(detailsRes, videoKey) {
           allowfullscreen
           autoplay="0"
         ></iframe>`;
-     
-    return `
+
+  return `
     <div class="movie-details animate__animated animate__zoomIn">
       <img
         class="movie-details__img"
@@ -27,8 +21,8 @@ export default function createMovieDetailsMarkup(detailsRes, videoKey) {
       />
       <div class="movie-details__desc">
         <p class="movie-details__title">${movieTitle}</p>
-        <p class="movie-details__desc-row movie-details__genres"><span>Genre</span>${movieGenres}</p>
-        <p class="movie-details__desc-row movie-details__year"><span>Year</span>${year}</p>
+        <p class="movie-details__desc-row movie-details__genres"><span>Genre</span>${genresNamesList}</p>
+        <p class="movie-details__desc-row movie-details__year"><span>Year</span>${releaseYear}</p>
         <button type="button" class="movie-details__video-play-btn" data-id=${id} aria-label="to open movie details">Show official trailer</button>
       </div>
       <div class="movie-details__video isHidden">${movieIframe}</div>

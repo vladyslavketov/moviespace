@@ -9,6 +9,7 @@ const refs = {
   btnUp: document.querySelector('.btn-up'),
 
   searchForm: document.querySelector('form.search-form'),
+  btnToTrends: document.querySelector('form .trends'),
   moviesList: document.querySelector('.movies__list'),
 };
 export default refs;

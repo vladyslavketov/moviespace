@@ -1,9 +1,10 @@
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '9cb79068ade378f45d510f1b7326cccd';
 
-export async function getMovies(typeOfQuery, movieId, searchQuery) {
+export async function getMovies(typeOfQuery, currentPage=1, searchQuery, movieId) {
   let options;
   let queryOptions = '';
+  const page = currentPage ? `&page=${currentPage}` : '';
 
   switch (typeOfQuery) {
     case 'search':
@@ -39,7 +40,9 @@ export async function getMovies(typeOfQuery, movieId, searchQuery) {
       console.log('Invalid typeOfQuery');
   }
 
-  const res = await fetch(`${BASE_URL}${options}?api_key=${API_KEY}${queryOptions}`);
+  const res = await fetch(
+    `${BASE_URL}${options}?api_key=${API_KEY}${queryOptions}${page}`
+  );
   const resJson = await res.json();
   return resJson;
 
