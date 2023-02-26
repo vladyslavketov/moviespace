@@ -2,7 +2,7 @@
   @extend %flex-center-ja;
   gap: 16px;
   margin: 20px auto;
-  padding: 16px;
+  padding: $padding-small;
 
   background-color: black;
   @extend %border-radius;
@@ -12,11 +12,13 @@
 
   background-color: wheat;
   @extend %border-radius;
+  @extend %cursor;
 }
 // .button-label {
 // }
 .search-form__input {
   padding: 8px;
+  min-width: 100px;
 
   background-color: wheat;
   @extend %border-radius;

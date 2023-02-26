@@ -37,7 +37,7 @@ export async function getMovies(typeOfQuery, currentPage=1, searchQuery, movieId
       break;
 
     default:
-      console.log('Invalid typeOfQuery');
+      console.log('Invalid type of query');
   }
 
   const res = await fetch(

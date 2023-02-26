@@ -11,4 +11,42 @@
   @extend .btn;
   width: 40px;
   height: 35px;
+
+  &.isHidden {
+    display: none;
+  }
+}
+
+// .paginationBtn:nth-child(2) {
+//     background-color: teal;
+
+//     &::after {
+//       content: '...';
+//     }
+//   }
+
+// @include breakpoint-max($smallMax) {
+//   .paginationBtn:nth-child(-n + 3) {
+//     background-color: teal;
+//     order: -1;
+//     flex: 1 0 21%;
+//   }
+
+//   .paginationBtn:nth-last-child(-n + 3) {
+//     background-color: teal;
+//     order: -1;
+//     flex: 1 0 21%;
+//   }
+// }
+
+.paginationBtn__extra {
+  @extend .paginationBtn;
+
+  &.isHidden {
+    display: none;
+  }
+
+  // &--decor {
+  //   background-color: rgba(0, 0, 0, 0.8);;
+  // }
 }

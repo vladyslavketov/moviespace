@@ -1,0 +1,19 @@
+<div class="movie-details animate__animated animate__zoomIn">
+      <img
+        class="movie-details__img"
+        src=${movieImg}
+        alt=${movieTitle}
+      />
+      <div class="movie-details__desc">
+        <p class="movie-details__title">${movieTitle}</p>
+        <ul class="movie-details__desc-list">
+          <li class="movie-details__desc-item">
+            <span>Genre</span><span>${genresNamesList}</span>
+          </li>
+        </ul>
+
+
+        <button type="button" class="movie-details__video-play-btn" data-id=${id} aria-label="to open movie details">Show trailer</button>
+      </div>
+      <div class="movie-details__video isHidden">${movieIframe}</div>
+    </div>

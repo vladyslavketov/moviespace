@@ -9,6 +9,8 @@
   position: relative;
   @extend %cardSet__item;
   @extend %flex-dir-column;
+
+  background-color: black;
   @extend %border-radius;
   overflow: hidden;
 
@@ -28,6 +30,29 @@
   @extend %cursor;
 }
 
+.movie-card__desc {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+
+  padding: 12px;
+
+  font-size: 12px;
+  color: wheat;
+  background-color: black;
+  @extend %border-radius;
+}
+
+.movie-card__title,
+.movie-card__year {
+  font-size: 16px
+}
+
+.movie-card__ganres {
+  margin-top: auto;
+}
+
 .movie-card__details-btn {
   @extend %absolute;
   top: 0;
@@ -42,12 +67,17 @@
 .movie-details {
   position: relative;
   display: flex;
-  gap: 16px;
-  padding: 16px;
+  gap: $padding-small;
+  padding: $padding-small;
 
   color: wheat;
   background-color: rgba(0, 0, 0, 0.9);
   @extend %border-radius;
+
+  @include breakpoint-min($large) {
+    gap: $padding-medium;
+    padding: $padding-medium;
+  }
 }
 
 .movie-details__img {
@@ -65,33 +95,111 @@
 .movie-details__desc {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+
+  font-size: 12px;
+
+  @include breakpoint-min($medium) {
+    font-size: 18px;
+  }
+
+  @include breakpoint-min($large) {
+    font-size: 24px;
+  }
+}
+
+.movie-details__desc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .movie-details__title {
-  font-size: 24px;
-  margin-bottom: 16px;
+  font-size: 16px;
+
+  @include breakpoint-min($medium) {
+    font-size: 24px;
+  }
+
+  @include breakpoint-min($large) {
+    font-size: 40px;
+  }
 }
 
-.movie-details__desc-row {
-  margin-bottom: 6px;
+.movie-details__desc-item {
+  display: flex;
+  gap: 12px;
 }
 
-.movie-details__desc-row span {
-  width: 100px;
-  margin-right: 12px;
+.movie-details__desc-label {
+  flex: 0 1 68px;
+
+  @include breakpoint-min($medium) {
+    flex: 0 1 108px;
+  }
+}
+
+.movie-details__desc-info {
+  flex: 1 1;
+}
+
+.movie-details__desc-info span {
+  padding: 0 8px;
+  @extend %border-radius;
+
+  &:first-child {
+    color: black;
+    background-color: wheat;
+  }
+}
+
+.movie-details__btns-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  margin-top: auto;
+}
+
+.movie-details__btns {
+  display: flex;
+
+  margin-top: auto;
+}
+
+// .movie-details__video-play-btn {
+//   position: relative;
+//   display: block;
+//   width: 100%;
+//   height: 40px;
+//   margin-top: auto;
+
+//   color: wheat;
+//   background-color: red;
+//   @extend %border-radius;
+//   @extend %cursor;
+//   z-index: 1000;
+
+//   &.isHidden {
+//     display: none;
+//   }
+// }
+
+.movie-details__btns {
+  display: block;
+  width: 100%;
+  height: 40px;
+
+  background-color: wheat;
+  @extend %border-radius;
+  @extend %cursor;
 }
 
 .movie-details__video-play-btn {
   position: relative;
-  display: block;
-  width: 100%;
-  height: 40px;
-  margin-top: auto;
 
   color: wheat;
   background-color: red;
-  @extend %border-radius;
-  @extend %cursor;
   z-index: 1000;
 
   &.isHidden {
@@ -105,7 +213,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 16px;
+  padding: $padding-small;
   // @extend %flex-center-ja;
   // display: flex;
 
@@ -114,6 +222,10 @@
 
   &.isHidden {
     display: none;
+  }
+
+  @include breakpoint-min($large) {
+    padding: 32px;
   }
 }
 

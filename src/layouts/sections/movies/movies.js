@@ -5,17 +5,16 @@ import createMovieCardMarkup from '../../../templates/createMovieCardMarkup';
 import createMovieDetailsMarkup from '../../../templates/createMovieDetailsMarkup';
 import createMovieDetailsErrorMarkup from '../../../templates/createMovieDetailsErrorMarkup';
 
-import { createPaginationBtnListMarkup, getCurrentPage } from '../../../components/pagination/pagination';
+import { getCurrentPage, renderPagination, showPagBtns } from '../../../components/pagination/pagination';
 import { showLoader, hideLoader } from '../../../components/loader/loader';
 import { openModal } from '../../../components/modal/modal';
+import { hideShowBtn } from '../../../components/pagination/pagination';
 
 import '../../../components/search-form/search-form';
 import setBtnDisabled from '../../../common/js/setBtnDisabled';
 import setCurrentClass from '../../../common/js/setCurrentClass';
-import { hideBtn } from '../../../components/pagination/pagination';
 
 let allGenresList = null;
-let currentCase = 'trend';
 onFirstLoad();
 
 // ===== addEventListeners ==================================================
@@ -27,9 +26,10 @@ async function onFirstLoad() {
   allGenresList = await getAllGenres();
   const trendRes = await getMovies('trend');
 
-  refs.pagination.setAttribute('data-case', 'trend');
+  refs.pagination.setAttribute('data-type', 'trend');
   renderMovies(trendRes.results);
   renderPagination(trendRes.total_pages);
+  showPagBtns();
 }
 
 async function onMovieDetailsBtnClick(e) {
@@ -61,25 +61,25 @@ async function onMovieDetailsBtnClick(e) {
 function onMovieDetailsPlayBtnClick(e) {
   const movieDetailsVideoRef = refs.modal.querySelector(".movie-details__video");
   movieDetailsVideoRef.classList.toggle('isHidden');
-  e.target.textContent === 'Show official trailer'
-    ? (e.target.textContent = 'Hide official trailer')
-    : (e.target.textContent = 'Show official trailer');
+  e.target.textContent === 'Show trailer'
+    ? (e.target.textContent = 'Hide trailer')
+    : (e.target.textContent = 'Show trailer');
 }
 
 async function onPaginationBtnClick(e) {
   if (e.target.nodeName !== 'BUTTON') return;
   showLoader();
   const currentPage = getCurrentPage(e);
-  const currentCase = refs.pagination.dataset.case;
-  const currentQuery = refs.pagination.dataset.query;
-
-  const res = await getMovies(currentCase, currentPage, currentQuery);
+  const currentTypeOfQuery = refs.pagination.dataset.type;
+  const currentSearchQuery = refs.pagination.dataset.query;
+  const res = await getMovies(currentTypeOfQuery, currentPage, currentSearchQuery);
+  
   renderMovies(res.results);
-
-  hideBtn(e);
+  // hideShowBtn(e);
+  showPagBtns(e);
   setBtnDisabled(e, '.paginationBtn');
   setCurrentClass(e, '.paginationBtn.current');
-  // renderContent(filterData, currentPage);
+  refs.pagination.setAttribute('data-currentpage', currentPage);
   hideLoader();
 }
 
@@ -90,6 +90,7 @@ async function getAllGenres() {
 }
 
 function getGenresNames(genresIds) {
+  if (!genresIds || !genresIds.length) return 'Other';
   const genresNames = genresIds
     .map(genreId => allGenresList.find(genre => genreId === genre.id)?.name)
     .filter(genreName => genreName !== undefined)
@@ -117,14 +118,31 @@ function getDataArrayToRender(dataArray) {
     const releaseDate = release_date ? release_date : first_air_date;
     const releaseYear = releaseDate ? releaseDate.slice(0, 4) : '';
 
-    return { id, movieTitle, movieImg, releaseYear, genresNamesList };
+    return {
+      id,
+      movieTitle,
+      movieImg,
+      releaseYear,
+      genresNamesList
+    };
   });
 
   return dataArrayToRender;
 }
 
 function getDataToRender(dataArray) {
-  const { id, name, title, genres, poster_path, release_date, firstDate } = dataArray;
+  const {
+    id,
+    name,
+    title,
+    genres,
+    poster_path,
+    release_date,
+    firstDate,
+    vote_average,
+    vote_count,
+    overview
+  } = dataArray;
   const movieTitle = title || name;
   const genresNamesList = genres?.map(genr => genr.name).join(', ');
   const movieImg = poster_path
@@ -132,8 +150,18 @@ function getDataToRender(dataArray) {
     : './images/coming_soon.webp';
   const releaseDate = release_date ? release_date : firstDate;
   const releaseYear = releaseDate ? releaseDate.slice(0, 4) : '';
+  const vote = vote_average.toFixed(1);
 
-  return { id, movieTitle, movieImg, releaseYear, genresNamesList }
+  return {
+    id,
+    movieTitle,
+    movieImg,
+    releaseYear,
+    genresNamesList,
+    vote,
+    vote_count,
+    overview
+  };
 }
 
 async function getMovieDetailsVideoKey(data) {
@@ -154,11 +182,6 @@ export function renderMovies(moviesData) {
   refs.moviesList.innerHTML = listMarkup;
 }
 
-export async function renderPagination(pages) {
-  if (!pages || pages < 2) return (refs.pagination.innerHTML = ''); // TODO -  передивитись блок іф
-  refs.pagination.innerHTML = createPaginationBtnListMarkup(pages);
-}
-
 function checkMovieName(e, dataToCheck) {
   const currentTitle = e.target.parentElement.querySelector('.movie-card__title').textContent;
   const { name, title } = dataToCheck;
@@ -166,7 +189,7 @@ function checkMovieName(e, dataToCheck) {
   return (currentTitle !== movieTitle) ? false : true;
 }
 
-
+// =======================================================
 // const detailsRes = async function getdetailsRes() {
 //   try {
 //     const detailsRes = await getMovies('details', currentMovieId);

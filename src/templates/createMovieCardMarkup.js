@@ -11,9 +11,11 @@ export default function createMovieCardMarkup(data) {
         height="450"
       />
       <div class="movie-card__desc">
-        <p class="movie-card__title">${movieTitle}</p>
-        <p class="movie-details__genres">${genresNamesList}</p>
-        <p class="movie-card__year">${releaseYear}</p>
+        <div class="movie-card__title-wrap">
+          <span class="movie-card__title">${movieTitle}</span>
+          <span class="movie-card__year">(${releaseYear})</span>
+        </div>
+        <p class="movie-card__ganres">${genresNamesList}</p>
       </div>
       <button type="button" class="movie-card__details-btn" data-id=${id} aria-label="to open movie details"></button>
     </li>
