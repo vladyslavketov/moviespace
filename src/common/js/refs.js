@@ -11,5 +11,6 @@ const refs = {
   searchForm: document.querySelector('form.search-form'),
   btnToTrends: document.querySelector('form .trends'),
   moviesList: document.querySelector('.movies__list'),
+  movieSection: document.querySelector('section.movies'),
 };
 export default refs;

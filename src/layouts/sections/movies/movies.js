@@ -70,6 +70,7 @@ function onMovieDetailsPlayBtnClick(e) {
 async function onPaginationBtnClick(e) {
   if (e.target.nodeName !== 'BUTTON') return;
   showLoader();
+  refs.movieSection.scrollIntoView(true);
 
   const currentPage = getCurrentPage(e);
   const currentTypeOfQuery = refs.pagination.dataset.type;

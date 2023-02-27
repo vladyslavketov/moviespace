@@ -41,3 +41,10 @@
     display: none;
   }
 }
+
+@include breakpoint-max(400px) {
+  .paginationBtn:nth-child(-n+2),
+  .paginationBtn:nth-last-child(-n+3) {
+    flex: 1 0 17%;
+  }
+}
