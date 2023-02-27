@@ -1,7 +1,7 @@
 .pagination {
-  @extend %flex-center-ja;
-  flex-wrap: wrap;
-  gap: 8px;
+  --gap: 8px;
+  @extend %cardSet;
+  align-items: center;
 
   padding: $padding-small;
   z-index: 1;
@@ -10,43 +10,34 @@
 .paginationBtn {
   @extend .btn;
   width: 40px;
-  height: 35px;
+  height: 40px;
 
   &.isHidden {
     display: none;
   }
 }
 
-// .paginationBtn:nth-child(2) {
-//     background-color: teal;
-
-//     &::after {
-//       content: '...';
-//     }
-//   }
-
-// @include breakpoint-max($smallMax) {
-//   .paginationBtn:nth-child(-n + 3) {
-//     background-color: teal;
-//     order: -1;
-//     flex: 1 0 21%;
-//   }
-
-//   .paginationBtn:nth-last-child(-n + 3) {
-//     background-color: teal;
-//     order: -1;
-//     flex: 1 0 21%;
-//   }
-// }
-
 .paginationBtn__extra {
   @extend .paginationBtn;
+}
 
-  &.isHidden {
-    display: none;
+@include breakpoint-max($smallMax) {
+  .paginationBtn:nth-child(-n+2),
+  .paginationBtn:nth-last-child(-n+3) {
+    flex: 1 0 18%;
+    display: block;
+    order: -1;
   }
 
-  // &--decor {
-  //   background-color: rgba(0, 0, 0, 0.8);;
-  // }
+  .paginationBtn:nth-child(1),
+  .paginationBtn:nth-last-child(1) {
+    &.isHidden {
+      color: rgba(245, 222, 179, 0.2);
+      pointer-events: none;
+    }
+  }
+
+  .paginationBtn:nth-child(3) {
+    display: none;
+  }
 }
