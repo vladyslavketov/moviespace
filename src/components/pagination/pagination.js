@@ -4,7 +4,15 @@ import { addClass, removeClass } from '../../common/js/toggleClass';
 
 export function getCurrentPage(e) {
   if (!e) return "1";
-  return e.target.dataset.page;
+  
+  let currentPage = "1";
+  if (e.target.dataset.page === 'next') {
+    currentPage = String(Number(refs.pagination.dataset.currentpage) + 1);
+  } else if (e.target.dataset.page === 'prev') {
+    currentPage = String(Number(refs.pagination.dataset.currentpage) - 1);
+  } else currentPage = e.target.dataset.page;
+
+  return currentPage;
 }
 
 function createPaginationBtnListMarkup(pages) {
@@ -33,42 +41,10 @@ export async function renderPagination(pages) {
   refs.pagination.innerHTML = createPaginationBtnListMarkup(pages);
 }
 
-export function hideShowBtn(e) {
-  const currentPage = getCurrentPage(e);
-  const pagBtnsRef = refs.pagination.querySelectorAll('.paginationBtn');
-  const pagExtraBtnsRef = refs.pagination.querySelectorAll(
-    '.paginationBtn__extra'
-  );
-  const NOB = 3; // NOB - number of (additional) bottons
-
-  const currentPagListMin = currentPage > NOB ? Number(currentPage) - NOB : 1;
-  const currentPagListMax = currentPage > NOB ? Number(currentPage) + NOB : 7;
-
-  for (const pagBtn of pagBtnsRef) {
-    if (
-      pagBtn.dataset.page < currentPagListMin ||
-      pagBtn.dataset.page > currentPagListMax
-    ) {
-      addClass(pagBtn, 'isHidden');
-    } else {
-      removeClass(pagBtn, 'isHidden');
-    }
-  }
-  // === btn FIRST page and LAST page ===
-  removeClass(pagBtnsRef[0], 'isHidden');
-  removeClass(pagBtnsRef[pagBtnsRef.length - 1], 'isHidden');
-
-  // === btn decoration ===
-  removeClass(pagExtraBtnsRef[1], 'isHidden');
-  if (window.innerWidth > 767 && currentPage > '5')
-    removeClass(pagExtraBtnsRef[0], 'isHidden');
-}
-
-export function showPagBtns(e) {
+export function showPagBtns(currentPage) {
   const pagBtnsRef = refs.pagination.querySelectorAll('.paginationBtn');
   const pagExtraBtnsRef = refs.pagination.querySelectorAll('.paginationBtn__extra');
   const lastPage = pagBtnsRef.length;
-  const currentPage = Number(getCurrentPage(e));
   const NOB = 3; // NOB - number of (additional) bottons
   let minNOB = 1;
   let maxNOB = 7;
@@ -81,11 +57,6 @@ export function showPagBtns(e) {
     maxNOB = currentPage + NOB;
   }
   
-  // console.log('currentPage', currentPage);
-  // console.log('minNOB', minNOB);
-  // console.log('maxNOB', maxNOB);
-  // console.log('lastPage', lastPage);
-  
   switch (currentPage) {
     case 1:
       for (const pagBtn of pagBtnsRef) {
@@ -94,14 +65,46 @@ export function showPagBtns(e) {
         if (pageNumber === 1 || pageNumber === lastPage) continue;
         else if (pageNumber <= maxNOB) removeClass(pagBtn, 'isHidden');
         else addClass(pagBtn, 'isHidden');
-      };
+      }
 
       addClass(pagExtraBtnsRef[0], 'isHidden');
       addClass(pagExtraBtnsRef[1], 'isHidden');
       removeClass(pagExtraBtnsRef[2], 'isHidden');
       removeClass(pagExtraBtnsRef[3], 'isHidden');
       break;
-    
+
+    case 6:
+      for (const pagBtn of pagBtnsRef) {
+        const pageNumber = Number(pagBtn.dataset.page);
+
+        if (pageNumber === 1 || pageNumber === lastPage) continue;
+        else if (pageNumber <= maxNOB) removeClass(pagBtn, 'isHidden');
+        else addClass(pagBtn, 'isHidden');
+      }
+
+      removeClass(pagExtraBtnsRef[0], 'isHidden');
+      addClass(pagExtraBtnsRef[1], 'isHidden');
+      removeClass(pagExtraBtnsRef[2], 'isHidden');
+      removeClass(pagExtraBtnsRef[3], 'isHidden');
+      break;
+
+    case lastPage-5:
+      for (const pagBtn of pagBtnsRef) {
+        const pageNumber = Number(pagBtn.dataset.page);
+
+        if (pageNumber === 1 || pageNumber === lastPage) continue;
+        else if (pageNumber >= minNOB) removeClass(pagBtn, 'isHidden');
+        else addClass(pagBtn, 'isHidden');
+      }
+
+      console.log(minNOB);
+
+      removeClass(pagExtraBtnsRef[0], 'isHidden');
+      removeClass(pagExtraBtnsRef[1], 'isHidden');
+      addClass(pagExtraBtnsRef[2], 'isHidden');
+      removeClass(pagExtraBtnsRef[3], 'isHidden');
+      break;
+
     case lastPage:
       for (const pagBtn of pagBtnsRef) {
         const pageNumber = Number(pagBtn.dataset.page);
@@ -109,7 +112,7 @@ export function showPagBtns(e) {
         if (pageNumber === 1 || pageNumber === lastPage) continue;
         else if (pageNumber >= minNOB) removeClass(pagBtn, 'isHidden');
         else addClass(pagBtn, 'isHidden');
-      };
+      }
 
       removeClass(pagExtraBtnsRef[0], 'isHidden');
       removeClass(pagExtraBtnsRef[1], 'isHidden');
@@ -122,14 +125,17 @@ export function showPagBtns(e) {
         const pageNumber = Number(pagBtn.dataset.page);
 
         if (pageNumber === 1 || pageNumber === lastPage) continue;
-        else if (pageNumber < minNOB || pageNumber > maxNOB) addClass(pagBtn, 'isHidden');
+        else if (pageNumber < minNOB || pageNumber > maxNOB)
+          addClass(pagBtn, 'isHidden');
         else removeClass(pagBtn, 'isHidden');
       }
 
       removeClass(pagExtraBtnsRef[0], 'isHidden');
       removeClass(pagExtraBtnsRef[3], 'isHidden');
       if (currentPage > 5) removeClass(pagExtraBtnsRef[1], 'isHidden');
-      if (currentPage <= lastPage-5) removeClass(pagExtraBtnsRef[2], 'isHidden');
+      if (currentPage <= 5) addClass(pagExtraBtnsRef[1], 'isHidden');
+      if (currentPage <= lastPage - 5)
+        removeClass(pagExtraBtnsRef[2], 'isHidden');
   }
 }
 

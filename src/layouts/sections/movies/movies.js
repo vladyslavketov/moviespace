@@ -8,7 +8,6 @@ import createMovieDetailsErrorMarkup from '../../../templates/createMovieDetails
 import { getCurrentPage, renderPagination, showPagBtns } from '../../../components/pagination/pagination';
 import { showLoader, hideLoader } from '../../../components/loader/loader';
 import { openModal } from '../../../components/modal/modal';
-import { hideShowBtn } from '../../../components/pagination/pagination';
 
 import '../../../components/search-form/search-form';
 import setBtnDisabled from '../../../common/js/setBtnDisabled';
@@ -26,10 +25,12 @@ async function onFirstLoad() {
   allGenresList = await getAllGenres();
   const trendRes = await getMovies('trend');
 
-  refs.pagination.setAttribute('data-type', 'trend');
+  if (trendRes.total_pages > 50) trendRes.total_pages = 50; // limit the NOP
   renderMovies(trendRes.results);
   renderPagination(trendRes.total_pages);
-  showPagBtns();
+  showPagBtns(1);
+  refs.pagination.setAttribute('data-type', 'trend');
+  refs.pagination.setAttribute('data-currentpage', 1);
 }
 
 async function onMovieDetailsBtnClick(e) {
@@ -69,16 +70,21 @@ function onMovieDetailsPlayBtnClick(e) {
 async function onPaginationBtnClick(e) {
   if (e.target.nodeName !== 'BUTTON') return;
   showLoader();
+
   const currentPage = getCurrentPage(e);
   const currentTypeOfQuery = refs.pagination.dataset.type;
   const currentSearchQuery = refs.pagination.dataset.query;
-  const res = await getMovies(currentTypeOfQuery, currentPage, currentSearchQuery);
-  
+  const res = await getMovies(
+    currentTypeOfQuery,
+    currentPage,
+    currentSearchQuery
+  );
+
   renderMovies(res.results);
-  // hideShowBtn(e);
-  showPagBtns(e);
-  setBtnDisabled(e, '.paginationBtn');
-  setCurrentClass(e, '.paginationBtn.current');
+  showPagBtns(Number(currentPage));
+  setBtnDisabled('.paginationBtn', currentPage, e);
+  setCurrentClass('.paginationBtn.current', currentPage, e);
+
   refs.pagination.setAttribute('data-currentpage', currentPage);
   hideLoader();
 }

@@ -19,11 +19,11 @@ export default function paginationBtnMarkup(number, lastPageNumber) {
       break;
 
     case 'prev':
-      btn = `<button class="paginationBtn__extra paginationBtn__extra--arrov isHidden" data-page="${number}" aria-label="to open previous page" disabled>${number}</button>`;
+      btn = `<button class="paginationBtn__extra paginationBtn__extra--arrov isHidden" data-page="${number}" aria-label="to open previous page">${number}</button>`;
       break;
 
     case 'next':
-      btn = `<button class="paginationBtn__extra paginationBtn__extra--arrov" data-page="${number}" aria-label="to open next page" disabled>${number}</button>`;
+      btn = `<button class="paginationBtn__extra paginationBtn__extra--arrov" data-page="${number}" aria-label="to open next page">${number}</button>`;
       break;
 
     default:
