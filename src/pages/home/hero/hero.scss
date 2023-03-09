@@ -1,0 +1,59 @@
+section.hero {
+  position: relative;
+  @extend %flex-center-ja;
+  min-height: 380px;
+  padding: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
+
+
+  @include breakpoint-min(500px) {
+    min-height: 339px;
+  }
+  
+   @include breakpoint-min($medium) {
+    min-height: 230px;
+  }
+}
+
+.section.hero .container {
+  position: absolute;
+  @extend %flex-center-ja;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section.hero h1, h2, h3 {
+  text-align: center;
+  color: wheat;
+
+}
+
+.section.hero h1 {
+  font-size: 36px;
+}
+
+.section.hero h2 {
+  font-size: 24px;
+}
+
+.section.hero h3 {
+  font-size: 14px;
+}
+
+.hero__bg-img-list {
+  --gap: 0;
+  @extend %cardSet;
+  z-index: -1;
+}
+
+.hero__bg-img {
+  flex: 1 1 20%;
+
+  @include breakpoint-min(500px) {
+    flex: 1 1 14%;
+  }
+
+  @include breakpoint-min(768px) {
+    flex: 1 1 10%;
+  }
+}

@@ -14,6 +14,7 @@ html {
 
 body {
   position: relative;
+  // padding-top: 40px;
 
   font-family: var(--font-f__main);
   font-size: 16px;
@@ -43,16 +44,8 @@ svg {
   display: block;
 }
 
-.section-wrap {
-  padding-top: calc($height-header + 12px);
-}
-
 .section {
-  padding-bottom: 32px;
-
-  &.top {
-    padding-top: calc($height-header + 32px);
-  }
+  padding: 32px 0;
 }
 
 .container {

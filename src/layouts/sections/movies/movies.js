@@ -12,6 +12,7 @@ import { openModal } from '../../../components/modal/modal';
 import '../../../components/search-form/search-form';
 import setBtnDisabled from '../../../common/js/setBtnDisabled';
 import setCurrentClass from '../../../common/js/setCurrentClass';
+import { setBgHero } from '../../../pages/home/hero/hero';
 
 let allGenresList = null;
 onFirstLoad();
@@ -24,6 +25,7 @@ refs.pagination?.addEventListener('click', onPaginationBtnClick);
 async function onFirstLoad() {
   allGenresList = await getAllGenres();
   const trendRes = await getMovies('trend');
+  setBgHero(trendRes.results);
 
   if (trendRes.total_pages > 50) trendRes.total_pages = 50; // limit the NOP
   renderMovies(trendRes.results);

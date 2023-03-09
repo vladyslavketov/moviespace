@@ -6,6 +6,7 @@
 @import './utils/visually-hidden';
 @import './common';
 
+@import '../../components/logo/logo';
 @import '../../components/loader/loader';
 @import '../../components/btns/index';
 @import '../../components/pagination/pagination';
@@ -13,5 +14,6 @@
 @import '../../components/modal/modal';
 @import '../../components/mobile-menu/mobile-menu';
 
+@import '../../layouts/header/header';
 @import '../../layouts/sections/movies/movies';
 @import '../../layouts/footer/footer';

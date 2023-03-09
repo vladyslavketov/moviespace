@@ -1,0 +1,12 @@
+header {
+  position: fixed;
+  top: 0;
+
+  @extend %flex-center-ja;
+  width: 100%;
+  height: 40px;
+
+  color: wheat;
+  background-color: transparent;
+  z-index: 100;
+}
