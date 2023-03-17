@@ -1,20 +1,20 @@
 {
-  "name": "filmstore",
+  "name": "moviespace",
   "version": "1.0.0",
   "source": "src/pages/index.html",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /filmstore/"
+    "build": "parcel build src/*.html --public-url /moviespace/"
   },
-  "homepage": "https://github.com/vladyslavketov/filmstore",
+  "homepage": "https://github.com/vladyslavketov/moviespace",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vladyslavketov/filmstore.git"
+    "url": "git+https://github.com/vladyslavketov/moviespace.git"
   },
   "author": "Vladyslav Ketov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vladyslavketov/filmstore/issues"
+    "url": "https://github.com/vladyslavketov/moviespace/issues"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
