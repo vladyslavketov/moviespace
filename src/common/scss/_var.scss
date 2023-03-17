@@ -2,11 +2,18 @@
   // === fonts ===
 
   // === colors ===
-  --bgc__main: rgb(255, 221, 154);
+  --c__main: rgba(255, 255, 255, 0.9);
+  // --c__accent: rgb(255, 175, 35);
+  --c__accent: rgb(28, 172, 255);
+  --bgc__main: rgba(0, 0, 0, 0.9);
+  --bgc__secondary: rgba(40, 40, 40);
 
   // === card set item ===
   --items: 1;
   --gap: 20px;
+
+  --trs__main:  1s ease-in-out 0s;
+  
 }
 
 // === screen sizes ===
@@ -24,3 +31,12 @@ $height-header: 60px;
 $padding-small: 16px;
 $padding-medium: calc($padding-small * 2);
 $border-radius: 8px;
+
+
+  // rgb(125, 155, 255)
+  // rgb(28, 172, 255);
+  // rgb(250, 60, 60);
+  // rgb(250, 180, 60);
+  // rgb(255, 175, 35);
+
+

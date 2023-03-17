@@ -21,11 +21,22 @@
   @extend .paginationBtn;
 }
 
+.paginationBtn__extra--arrov {
+  & div {
+    transform: rotate(-90deg);
+    pointer-events: none;
+  }
+
+  &:last-child div {
+    transform: rotate(90deg);
+  }
+}
+
 @include breakpoint-max($smallMax) {
   .paginationBtn:nth-child(-n+2),
   .paginationBtn:nth-last-child(-n+3) {
     flex: 1 0 18%;
-    display: block;
+    display: flex;
     order: -1;
   }
 

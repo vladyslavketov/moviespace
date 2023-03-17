@@ -12,12 +12,10 @@
       border-radius: 50%;
       position: absolute;
       border: calc(65px * 0.05) solid transparent;
-      border-top-color: rgb(29, 172, 255);
-      border-left-color:  wheat;
+      border-top-color: var(--c__accent);
+      border-left-color: rgb(255, 175, 35);
       animation: semipolar-spinner-animation 2s infinite;
     }
-
-    // rgb(29, 172, 255);
 
     .semipolar-spinner .ring:nth-child(1) {
       height: calc(65px - 65px * 0.2 * 0);

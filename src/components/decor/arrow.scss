@@ -1,0 +1,27 @@
+.arrow__up {
+  position: relative;
+  @extend %flex-center-ja;
+  width: 32px;
+  height: 32px;
+}
+
+.decor-line {
+  @extend %absolute;
+
+  width: 20px;
+  height: 3px;
+  margin: 0;
+  
+
+  background-color: rgb(230, 230, 230);
+  @extend %border-radius;
+
+  &:first-child {
+    transform: rotate(-45deg) translateX(-4px) translateY(-5px);
+  }
+
+  &:last-child {
+    transform: rotate(45deg) translateX(4px) translateY(-5px);
+  }
+}
+

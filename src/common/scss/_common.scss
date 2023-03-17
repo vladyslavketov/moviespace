@@ -14,13 +14,11 @@ html {
 
 body {
   position: relative;
-  // padding-top: 40px;
-
-  font-family: var(--font-f__main);
   font-size: 16px;
   line-height: 1.2;
   letter-spacing: 0.03em;
-  color: var(--color__main);
+  color: var(--c__main);
+  background-color: var(--bgc__main);
 }
 
 body.isLoading,
@@ -34,6 +32,11 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+button,
+a {
+  color: inherit;
 }
 
 button[disabled] {

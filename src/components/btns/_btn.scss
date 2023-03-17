@@ -2,18 +2,15 @@
   @extend %flex-center-ja;
 
   font-size: inherit;
-  color: white;
+  // color: inherit;
 
-  background-color: black;
+  background-color: var(--bgc__secondary);
   @extend %border-radius;
   @extend %cursor;
-  
-  // &:hover,
-  // &:focus {
-  //   background-color: var(--color__hover);
-  // }
 
+  // &:hover,
+  // &:focus,
   &.current {
-    background-color: rgb(29, 172, 255);
+    background-color: var(--c__accent);
   }
 }

@@ -8,16 +8,17 @@
 .search-form__button {
   padding: 8px;
 
-  background-color: wheat;
+  color:  white;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   @extend %border-radius;
   @extend %cursor;
 }
-// .button-label {
-// }
+
 .search-form__input {
   padding: 8px;
   min-width: 100px;
 
-  background-color: wheat;
+  background-color: rgbargba(255, 255, 255, 0.8);
   @extend %border-radius;
 }

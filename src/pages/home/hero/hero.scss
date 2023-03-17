@@ -1,18 +1,22 @@
-section.hero {
+.section.hero {
   position: relative;
   @extend %flex-center-ja;
-  min-height: 380px;
   padding: 0;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
-
+  background: black;
+  height: 360px;
 
   @include breakpoint-min(500px) {
-    min-height: 339px;
+    height: 360px;
   }
   
-   @include breakpoint-min($medium) {
-    min-height: 230px;
+  @include breakpoint-min($medium) {
+    height: 400px;
   }
+
+  @include breakpoint-min(1200px) {
+    height: 500px;
+  }
+  overflow: hidden;
 }
 
 .section.hero .container {
@@ -20,12 +24,11 @@ section.hero {
   @extend %flex-center-ja;
   flex-direction: column;
   gap: 8px;
+  z-index: 1;
 }
 
 .section.hero h1, h2, h3 {
   text-align: center;
-  color: wheat;
-
 }
 
 .section.hero h1 {
@@ -41,19 +44,41 @@ section.hero {
 }
 
 .hero__bg-img-list {
-  --gap: 0;
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  --gap: 2px;
   @extend %cardSet;
-  z-index: -1;
+
+  transform: rotate3d(1, 0, 0.2, 60deg);
+
+}
+
+.hero__cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+ 
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
 }
 
 .hero__bg-img {
-  flex: 1 1 20%;
+  flex: 1 1 16%;
+  aspect-ratio: 2 / 4;
 
   @include breakpoint-min(500px) {
-    flex: 1 1 14%;
+    flex: 1 1 12%;
   }
 
   @include breakpoint-min(768px) {
     flex: 1 1 10%;
+  }
+
+  @include breakpoint-min(1000px) {
+    flex: 1 1 9%;
+  }
+
+  @include breakpoint-min(1200px) {
+    flex: 1 1 8%;
   }
 }

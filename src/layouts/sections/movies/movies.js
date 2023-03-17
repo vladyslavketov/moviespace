@@ -15,6 +15,7 @@ import setCurrentClass from '../../../common/js/setCurrentClass';
 import { setBgHero } from '../../../pages/home/hero/hero';
 
 let allGenresList = null;
+let currentMoviesList = null;
 onFirstLoad();
 
 // ===== addEventListeners ==================================================
@@ -22,11 +23,13 @@ refs.moviesList.addEventListener('click', onMovieDetailsBtnClick);
 refs.pagination?.addEventListener('click', onPaginationBtnClick);
 
 // ===== On function ==================================================
-async function onFirstLoad() {
+export async function onFirstLoad() {
   allGenresList = await getAllGenres();
   const trendRes = await getMovies('trend');
-  setBgHero(trendRes.results);
+  currentMoviesList = trendRes.results;
 
+  await setBgHero(trendRes.results);
+  
   if (trendRes.total_pages > 50) trendRes.total_pages = 50; // limit the NOP
   renderMovies(trendRes.results);
   renderPagination(trendRes.total_pages);
@@ -40,22 +43,25 @@ async function onMovieDetailsBtnClick(e) {
   showLoader();
 
   const currentMovieId = e.target.dataset.id;
-  const detailsRes = await getMovies('details', null, null, currentMovieId).then(res => { return res.status ? res : null})
+  const detailsRes = await getMovies('details', null, null, currentMovieId).then(res => { return res.status ? res : null });
   const checkedMovieName = detailsRes ? checkMovieName(e, detailsRes) : null;
-
-  if (detailsRes && checkedMovieName) {
-    const dataToRender = getDataToRender(detailsRes);
-    const videoRes = getMovies('video', null, null, currentMovieId);
-    const videoKey = await getMovieDetailsVideoKey(videoRes);
-    const movieDetailsMarkup = createMovieDetailsMarkup(dataToRender, videoKey);
-    refs.modal.innerHTML = movieDetailsMarkup;
-
-    const movieDetailsPlayBtnRef = refs.modal.querySelector('.movie-details__video-play-btn');
-    videoKey ? movieDetailsPlayBtnRef.addEventListener('click', onMovieDetailsPlayBtnClick) : movieDetailsPlayBtnRef.classList.add('isHidden'); // TODO - remove EventListener
+  let currentMovieData = detailsRes;
+  let videoRes = null;
+  
+  if (!detailsRes || !checkedMovieName) {
+    currentMovieData = currentMoviesList.find(item => item.id === Number(currentMovieId));
   } else {
-    const movieDetailsMarkup = createMovieDetailsErrorMarkup();
-    refs.modal.innerHTML = movieDetailsMarkup;
+    videoRes = await getMovies('video', null, null, currentMovieId);
   }
+
+  const dataToRender = getDataToRender(currentMovieData);
+  const videoKey = getMovieDetailsVideoKey(videoRes);
+  
+  const movieDetailsMarkup = createMovieDetailsMarkup(dataToRender, videoKey);
+  refs.modal.innerHTML = movieDetailsMarkup;
+
+  const movieDetailsPlayBtnRef = refs.modal.querySelector('.movie-details__video-play-btn');
+  videoKey ? movieDetailsPlayBtnRef.addEventListener('click', onMovieDetailsPlayBtnClick) : movieDetailsPlayBtnRef.classList.add('isHidden'); // TODO - remove EventListener
 
   openModal();
   hideLoader();
@@ -77,11 +83,9 @@ async function onPaginationBtnClick(e) {
   const currentPage = getCurrentPage(e);
   const currentTypeOfQuery = refs.pagination.dataset.type;
   const currentSearchQuery = refs.pagination.dataset.query;
-  const res = await getMovies(
-    currentTypeOfQuery,
-    currentPage,
-    currentSearchQuery
-  );
+  const res = await getMovies(currentTypeOfQuery, currentPage, currentSearchQuery);
+
+  currentMoviesList = res?.results;
 
   renderMovies(res.results);
   showPagBtns(Number(currentPage));
@@ -145,19 +149,26 @@ function getDataToRender(dataArray) {
     name,
     title,
     genres,
+    genre_ids,
     poster_path,
     release_date,
     firstDate,
+    first_air_date,
     vote_average,
     vote_count,
-    overview
+    overview,
   } = dataArray;
+
   const movieTitle = title || name;
-  const genresNamesList = genres?.map(genr => genr.name).join(', ');
+  const genresNamesList = genres ? genres?.map(genr => genr.name).join(', ') : getGenresNames(genre_ids);
   const movieImg = poster_path
     ? `https://image.tmdb.org/t/p/w500${poster_path}`
     : './images/coming_soon.webp';
-  const releaseDate = release_date ? release_date : firstDate;
+  const releaseDate = release_date
+    ? release_date
+    : firstDate
+    ? firstDate
+    : first_air_date;
   const releaseYear = releaseDate ? releaseDate.slice(0, 4) : '';
   const vote = vote_average.toFixed(1);
 
@@ -169,14 +180,14 @@ function getDataToRender(dataArray) {
     genresNamesList,
     vote,
     vote_count,
-    overview
+    overview,
   };
 }
 
-async function getMovieDetailsVideoKey(data) {
-  const { results } = await data;
-  if (!results || results.length < 1) return null;
+function getMovieDetailsVideoKey(data) {
+  if (!data || !data.results || data.results.length < 1) return null;
 
+  const { results } = data;
   const officialTrailer = results.find(res => res.name.toLowerCase() === 'official trailer');
   const anyTrailer = results.find(res => res.name.toLowerCase().includes('trailer'));
   const anyVideo = results[0];
@@ -197,13 +208,3 @@ function checkMovieName(e, dataToCheck) {
   const movieTitle = title || name;
   return (currentTitle !== movieTitle) ? false : true;
 }
-
-// =======================================================
-// const detailsRes = async function getdetailsRes() {
-//   try {
-//     const detailsRes = await getMovies('details', currentMovieId);
-//     return detailsRes;
-//   } catch (error) {
-//     return error;
-//   }
-// };
